@@ -1,3 +1,5 @@
+import csv
+
 todos = []
 stop = False
 
@@ -6,25 +8,34 @@ def get_todos():
     return todos
 
 def add_one_task(title):
-    # your code here
-    pass
-
+    str_title=str(title)
+    todos.append(str_title)
+    print("Your to'do has been added successfully")
+     
 def print_list():
     global todos
-    pass
+    print(f"This is your to'do list:")
+    count=1
+    for todo in todos:
+        print(str(count)+'. '+str(todos[count-1]))
+        count=count+1
+    print(f"You have= {str(len(todos))} to'do added")
 
 def delete_task(number_to_delete):
-    # your code here
-    pass
+    todos.pop(int(number_to_delete)-1)
+    print (f"Your to'do list {number_to_delete} has been delete successfully")
 
 def save_todos():
-    # your code here
-    pass
-
-    
+    with open('todoslist.csv','w', newline='') as f:
+        writer= csv.writer(f,delimiter="\n")
+        writer.writerow(todos)
+        
 def load_todos():
-    # your code here
-    pass
+    with open('todoslist.csv', newline='') as f:
+        reader = csv.reader(f,delimiter="\n")
+        todos.clear
+        for row in reader:
+            print(', '.join(row))
 
 # Below this code will only run if the entry file running was app.py
 if __name__ == '__main__':
@@ -40,6 +51,7 @@ if __name__ == '__main__':
     """)
         response = input()
         if response == "6":
+            print ("Good bye")
             stop = True
         elif response == "3":
             print_list()
